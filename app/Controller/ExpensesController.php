@@ -48,8 +48,8 @@ class ExpensesController extends AppController {
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
-        $params = array( 'conditions' => array('Expense.events_id ' => $id) );
-        $expense = $this->Expense->find('all', $params);
+        $params = array('fields' => array( 'Expense.title','Expense.amount'));
+        $expense = $this->Expense->findByEventsId( $id, $params);
         //$expense = $this->Expense->find('first');
         if(!count($expense)){
             echo '0'; exit;
