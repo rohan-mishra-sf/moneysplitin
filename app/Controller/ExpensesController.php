@@ -54,7 +54,7 @@ class ExpensesController extends AppController {
         if(!count($expense)){
             echo '0'; exit;
         }
-        echo json_encode($expense['Expense']);
+        echo json_encode($expense);
     }
 
     public function add() {
