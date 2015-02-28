@@ -17,7 +17,6 @@ class UsersController extends AppController {
         $this->layout = false;
         $users = $this->User->find('all');        
         $usersArray = $this->stripArrayIndex($users,'User');
-        //echo '<pre>'; print_r($usersArray); die;
         echo json_encode($usersArray);
     }
 
@@ -29,11 +28,11 @@ class UsersController extends AppController {
         return $result;
     }
 
-        public function view($id) {
+    public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
         $user = $this->User->findById($id);
-        echo json_encode($user);
+        echo json_encode($user['User']);
     }
 
     public function add() {   
