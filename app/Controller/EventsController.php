@@ -24,8 +24,15 @@ class EventsController extends AppController {
             echo json_encode($message);exit;
         } else {
             $User = $this->User->findBySessionCodeId($sessionCode);
-            $userArray = $this->stripArrayIndex($User,'users');
-            $this->loggedinUser = $userArray[0]['id'];
+            $userId = $User[0]['users']['id'];
+            if($userId == ''){
+                $message = array();
+                $message['success'] = "false";
+                $message['message'] = "not logged in";
+                echo json_encode($message);exit;
+            } else {
+                $this->loggedinUser = $userId;
+            }
         }
         parent::__construct($request, $response);
     }

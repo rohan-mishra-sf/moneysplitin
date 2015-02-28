@@ -14,6 +14,28 @@ class ExpensesController extends AppController {
         'ExpenseSharer'
     );
             
+    public function __construct($request = null, $response = null) {
+        $sessionCode = $request->header('sessioncode');        
+        if(!isset($sessionCode) || $sessionCode == ''){
+            $message = array();
+            $message['success'] = "false";
+            $message['message'] = "not logged in";
+            echo json_encode($message);exit;
+        } else {
+            $User = $this->User->findBySessionCodeId($sessionCode);
+            $userId = $User[0]['users']['id'];
+            if($userId == ''){
+                $message = array();
+                $message['success'] = "false";
+                $message['message'] = "not logged in";
+                echo json_encode($message);exit;
+            } else {
+                $this->loggedinUser = $userId;
+            }
+        }
+        parent::__construct($request, $response);
+    }
+    
     public function index() {
         $this->autoRender = false;
         $this->layout = false;

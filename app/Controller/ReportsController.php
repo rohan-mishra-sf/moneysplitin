@@ -8,14 +8,23 @@ App::import('Utility', 'Sanitize');
 class ReportsController extends AppController {
 
     public function __construct($request = null, $response = null) {
-        $userId = $request->header('userid');        
-        if(!isset($userId) || $userId == ''){
+        $sessionCode = $request->header('sessioncode');        
+        if(!isset($sessionCode) || $sessionCode == ''){
             $message = array();
             $message['success'] = "false";
             $message['message'] = "not logged in";
             echo json_encode($message);exit;
         } else {
-            $this->loggedinUser = $userId;
+            $User = $this->User->findBySessionCodeId($sessionCode);
+            $userId = $User[0]['users']['id'];
+            if($userId == ''){
+                $message = array();
+                $message['success'] = "false";
+                $message['message'] = "not logged in";
+                echo json_encode($message);exit;
+            } else {
+                $this->loggedinUser = $userId;
+            }
         }
         parent::__construct($request, $response);
     }

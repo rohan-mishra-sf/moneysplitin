@@ -35,7 +35,6 @@ class UsersController extends AppController {
 
             }
         }
-
         parent::__construct($request, $response);
     }
 
@@ -72,6 +71,7 @@ class UsersController extends AppController {
             }
         } else {
             $this->User->create();
+            $this->request->data['created_at'] = date('Y-m-d h:i:s');
             if ($result = $this->User->save($this->request->data)) {
                 $user = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data['email'])));
                 if(isset($user['User']['email']) && $user['User']['email'] != '' && $user['User']['email'] == $this->request->data['email']){
