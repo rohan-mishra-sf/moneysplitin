@@ -12,7 +12,7 @@ class UsersController extends AppController {
         'User'
     );
             
-    public function __construct($request = null, $response = null) {        
+    public function __construct($request = null, $response = null) {
         $method = $request->method();    
         if($method != 'POST'){
             $sessionCode = $request->header('sessioncode');        

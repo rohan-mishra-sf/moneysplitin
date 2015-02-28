@@ -43,7 +43,12 @@ class EventsController extends AppController {
         $this->layout = false;
         $events = $this->Event->getUserParticipatingEvents($this->loggedinUser);
         $eventsArray = $this->stripArrayIndex($events,'event');
-        echo json_encode($eventsArray);
+        //$eventsArray['count'] = count($eventsArray);
+        //echo '<pre>';        print_r($eventsArray); die;
+        $result = array();
+        $result['data'] = $eventsArray;
+        $result['count'] = count($eventsArray);
+        echo json_encode($result);
     }
 
     public function view($id) {

@@ -39,9 +39,35 @@ class ReportsController extends AppController {
             
     public function index() {
         $this->autoRender = false;
-        $this->layout = false;
-        $events = $this->Event->find('all');
-        echo json_encode($events);
+        $this->layout = false;                
+        /*$userEvents = $this->Event->getUserEvents($this->loggedinUser);
+        $userEventsArray = $this->stripArrayIndex($userEvents,'events_has_users');
+        $eventsArray = array();
+        foreach($userEventsArray as $key => $val){
+            $eventsArray[] = $val['events_id'];
+        }
+        $expenseContributionsArray = array();
+        $expenseSharesArray = array();
+        foreach($eventsArray as $k => $v){
+            $expenseContributionsArray[$v] = $this->Event->getUserEventsContributions($this->loggedinUser,$v);
+            foreach
+        }
+        foreach($eventsArray as $k => $v){
+            $expenseSharesArray[$v] = $this->Event->getUserEventsShares($this->loggedinUser,$v);
+        }
+        echo '<pre>'; 
+        print_r($eventsArray);
+        print_r($expenseContributionsArray);
+        print_r($expenseSharesArray);
+        die;*/
+        $userTotalContributionsArray = $this->Event->getUserTotalContributions($this->loggedinUser);
+        $userTotalSharesArray = $this->Event->getUserTotalSharers($this->loggedinUser);
+        $userTotalContributions = $userTotalContributionsArray[0][0]['sum(amount)'];
+        $userTotalShares = $userTotalSharesArray[0][0]['sum(amount)'];
+        $result = array();
+        $result['owe'] = $userTotalShares -  $userTotalContributions;
+        $result['TotalShares'] = $userTotalShares;
+        echo json_encode($result);
     }
 
     public function view($id) {
