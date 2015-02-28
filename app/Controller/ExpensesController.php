@@ -49,6 +49,9 @@ class ExpensesController extends AppController {
         $this->autoRender = false;
         $this->layout = false;
         $expense = $this->Expense->findById($id);
+        if(!isset($expense['Expense'])){
+            echo '0'; exit;
+        }
         echo json_encode($expense['Expense']);
     }
 
