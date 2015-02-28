@@ -80,7 +80,7 @@ class Event extends AppModel {
 	);
         
         public function getUserParticipatingEvents($userId){
-            $query="SELECT event.title, event.created_at, event.is_settled, event.users_id as ownerid  from events as event inner join events_has_users as events_has_users on events_has_users.events_id = event.id and events_has_users.users_id = $userId          "; 
+            $query="SELECT event.id,event.title, event.created_at, event.is_settled, event.users_id as ownerid  from events as event inner join events_has_users as events_has_users on events_has_users.events_id = event.id and events_has_users.users_id = $userId          "; 
             return $this->query($query);
 	}
         
