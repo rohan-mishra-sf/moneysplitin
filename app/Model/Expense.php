@@ -86,4 +86,11 @@ class Expense extends AppModel {
 			'order' => ''
 		)
 	);
+        
+        public function getEventExpenses($eventId){
+            $query  = "SELECT id,title,amount FROM expenses where events_id =$eventId ";                
+            return $this->query($query);
+        }
+
+        
 }
