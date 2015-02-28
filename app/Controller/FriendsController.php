@@ -31,7 +31,9 @@ class FriendsController extends AppController {
     
     public $components = array('RequestHandler');
     public $uses = array(
-        'EventsHasUser'
+        'EventsHasUser',
+        'Event',
+        'User'
     );
     
     public function index() {
@@ -43,9 +45,32 @@ class FriendsController extends AppController {
 
     public function view($id) {
         $this->autoRender = false;
-        $this->layout = false;
-        $friends = $this->findFaceBookFriends($id);
-        echo json_encode($friends);
+        $this->layout = false;        
+        $friendContributions = $this->Event->getFriendContributions($id);
+        $friendShares = $this->Event->getFriendShares($id);
+        $friendContributionsArray = array();
+        $friendSharesArray = array();
+        $usersArray = array();
+        foreach($friendShares as $k => $v){
+            $amountArray = $v[0];
+            $userArray = $v['users'];
+            $friendSharesArray[$v['users']['id']]['first_name'] = $userArray['first_name'];
+            $friendSharesArray[$v['users']['id']]['last_name'] = $userArray['last_name'];
+            $friendSharesArray[$v['users']['id']]['amount'] = $amountArray['amount'];            
+        }
+        foreach($friendContributions as $k => $v){
+            $amountArray = $v[0];
+            $userArray = $v['users'];
+            $friendContributionsArray[$v['users']['id']]['first_name'] = $userArray['first_name'];
+            $friendContributionsArray[$v['users']['id']]['last_name'] = $userArray['last_name'];
+            $friendContributionsArray[$v['users']['id']]['amount'] = $amountArray['amount'];            
+        }
+        foreach($friendSharesArray as $key => $val){
+            $usersArray[$key]['name'] = $val['first_name'].' '.$val['last_name'];
+            $usersArray[$key]['amount'] =  $friendContributionsArray[$key]['amount'] - $val['amount'];
+        }        
+        //echo '<pre>';     print_r($friendContributionsArray);   print_r($friendSharesArray);   print_r($usersArray); die;        
+        echo json_encode($usersArray);
     }
 
     public function add() {   

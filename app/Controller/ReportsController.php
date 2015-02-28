@@ -60,6 +60,7 @@ class ReportsController extends AppController {
         print_r($expenseContributionsArray);
         print_r($expenseSharesArray);
         die;*/
+        $this->response->header('Content-Type: application/json');
         $userTotalContributionsArray = $this->Event->getUserTotalContributions($this->loggedinUser);
         $userTotalSharesArray = $this->Event->getUserTotalSharers($this->loggedinUser);
         $userTotalContributions = $userTotalContributionsArray[0][0]['sum(amount)'];
@@ -73,8 +74,9 @@ class ReportsController extends AppController {
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
-        $event = $this->Event->findById($id);
-        echo json_encode($event);
+        $eventExpenses = $this->Event->geteventExpenses($id);
+        $eventExpensesArray['amount'] = $eventExpenses[0][0]['sum(amount)'];
+        echo json_encode($eventExpensesArray);
     }
 
     public function add() {   

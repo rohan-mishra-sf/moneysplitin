@@ -104,5 +104,19 @@ class Event extends AppModel {
             return $this->query($query);
 	}
 
+        public function geteventExpenses($eventId){
+            $query  = "SELECT sum(amount) FROM expenses where events_id =$eventId ";                
+            return $this->query($query);
+        }
+        
+        public function getFriendContributions($eventId){
+            $query  = "SELECT sum(amount) as amount, first_name, last_name,users.id FROM expense_contributors join users on expense_contributors.users_id = users.id  where expenses_id in (Select ex.id as expenses_id from expenses as ex left join events as e on ex.events_id=e.id where e.id = $eventId) GROUP BY users_id ";
+            return $this->query($query);
+        }
+        
+        public function getFriendShares($eventId){
+            $query  = "SELECT sum(amount) as amount, first_name, last_name, users.id FROM expense_sharers join users on expense_sharers.users_id = users.id  where expenses_id in (Select ex.id as expenses_id from expenses as ex left join events as e on ex.events_id=e.id  where e.id = $eventId) GROUP BY users_id ";
+            return $this->query($query);
+        }
         
 }

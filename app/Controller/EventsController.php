@@ -43,9 +43,6 @@ class EventsController extends AppController {
         $this->layout = false;
         $events = $this->Event->getUserParticipatingEvents($this->loggedinUser);
         $eventsArray = $this->stripArrayIndex($events,'event');
-        //$eventsArray['count'] = count($eventsArray);
-        //echo '<pre>';        print_r($eventsArray); die;
-        //$result = new ob
         $result = new Object();
         $result->count = count($eventsArray);
         $result->data = $eventsArray;

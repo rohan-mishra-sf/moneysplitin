@@ -34,7 +34,7 @@
         Router::mapResources('friends');        
         Router::mapResources('events');
         Router::mapResources('expenses');
-        //Router::mapResources('reports');
+        Router::mapResources('reports');
         Router::parseExtensions();
         
 /**
