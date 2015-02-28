@@ -51,7 +51,7 @@ class ExpensesController extends AppController {
         $params = array( 'conditions' => array('Expense.events_id ' => $id) );
         $expense = $this->Expense->find('list',$params);
         //$expense = $this->Expense->find('first');
-        if(!isset($expense['Expense'])){
+        if(!count($expense)){
             echo '0'; exit;
         }
         echo json_encode($expense['Expense']);
