@@ -71,4 +71,9 @@ class User extends AppModel {
             $query="SELECT id from users where session_token = '$sessionCode' "; 
             return $this->query($query);            
         }
+        
+        public function findByEmail($email){
+            $query="SELECT id from users where email = '$email' "; 
+            return $this->query($query);            
+        }
 }

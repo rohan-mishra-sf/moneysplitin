@@ -73,15 +73,22 @@ class FriendsController extends AppController {
         echo json_encode($usersArray);
     }
 
-    public function add() {   
+    public function add() {
         $this->autoRender = false;
         $this->layout = false;
         $message = array();
         $message['success'] = "false";        
-        $this->EventsHasUser->create();
-        if ($this->EventsHasUser->save($this->request->data)) {
-            $message['success'] = 'true';
-        }        
+        foreach($this->request->data['friends'] as $key => $val){
+            $saveDataArray = array();
+            $User = $this->User->findByEmail($val['email']);
+            $userId = $User[0]['users']['id'];
+            $saveDataArray['users_id'] = $userId;
+            $saveDataArray['events_id'] = $this->request->data['events_id'];            
+            $this->EventsHasUser->create();
+            if ($this->EventsHasUser->save($saveDataArray)) {
+                $message['success'] = 'true';
+            }        
+        }
         echo json_encode($message);
     }
 
