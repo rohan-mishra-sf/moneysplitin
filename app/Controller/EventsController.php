@@ -11,7 +11,8 @@ class EventsController extends AppController {
     
     public $uses = array(
         'Event',
-        'User'
+        'User',
+        'EventsHasUser'
     );
 
     
@@ -65,8 +66,16 @@ class EventsController extends AppController {
         $this->request->data['users_id'] = $this->loggedinUser;
         $this->request->data['created_at'] = date('Y-m-d h:i:s');
         $this->Event->create();
-        if ($this->Event->save($this->request->data)) {
-            $message['success'] = 'true';
+        if ($result = $this->Event->save($this->request->data)) { 
+            $saveDataArray = array();
+            $userId = $result['Event']['users_id'];
+            $saveDataArray['users_id'] = $userId;
+            $saveDataArray['events_id'] = $result['Event']['id'];
+            //print_r($saveDataArray); die;
+            $this->EventsHasUser->create();
+            if ($this->EventsHasUser->save($saveDataArray)) {
+                $message['success'] = 'true';
+            }
         }        
         echo json_encode($message);
     }
