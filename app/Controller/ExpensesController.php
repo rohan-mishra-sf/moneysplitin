@@ -18,20 +18,18 @@ class ExpensesController extends AppController {
         $this->autoRender = false;
         $this->layout = false;
         $expenses = $this->Expense->find('all');
-        //echo '<pre>'; print_r($expenses); die;
-        echo json_encode($expenses);
+        $expensesArray = $this->stripArrayIndex($expenses,'Expense');
+        echo json_encode($expensesArray);
     }
 
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
         $expense = $this->Expense->findById($id);
-        //echo '<pre>'; print_r($expense); die;
-        echo json_encode($expense);
+        echo json_encode($expense['Expense']);
     }
 
-    public function add() {   
-        //echo '<pre>';        print_r($this->request->data); die;
+    public function add() {
         $this->autoRender = false;
         $this->layout = false;
         $message = array();
@@ -68,20 +66,7 @@ class ExpensesController extends AppController {
         }
         echo json_encode($message);
     }
-
     
-    public function edit($id) {
-        $this->autoRender = false;
-        $this->layout = false;
-        $message = array();
-        $message['success'] = "false";
-        $this->Expense->id = $id;
-        if ($this->Expense->save($this->request->data)) {
-            $message['success'] = 'true';
-        }
-        echo json_encode($message);
-    }
-
     public function delete($id) {
         $this->autoRender = false;
         $this->layout = false;

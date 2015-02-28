@@ -8,28 +8,45 @@ App::import('Utility', 'Sanitize');
 class EventsController extends AppController {
 
     public $components = array('RequestHandler');
+    
     public $uses = array(
-        'Event'
+        'Event',
+        'User'
     );
+
+    
+    public function __construct($request = null, $response = null) {
+        $sessionCode = $request->header('sessioncode');        
+        if(!isset($sessionCode) || $sessionCode == ''){
+            $message = array();
+            $message['success'] = "false";
+            $message['message'] = "not logged in";
+            echo json_encode($message);exit;
+        } else {
+            $User = $this->User->findBySessionCodeId($sessionCode);
+            $userArray = $this->stripArrayIndex($User,'users');
+            $this->loggedinUser = $userArray[0]['id'];
+        }
+        parent::__construct($request, $response);
+    }
+    
             
     public function index() {
         $this->autoRender = false;
         $this->layout = false;
-        $events = $this->Event->find('all');
-        echo json_encode($events);
+        $events = $this->Event->getUserParticipatingEvents($this->loggedinUser);
+        $eventsArray = $this->stripArrayIndex($events,'event');
+        echo json_encode($eventsArray);
     }
 
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
         $event = $this->Event->findById($id);
-        echo json_encode($event);
+        echo json_encode($event['Event']);
     }
 
-    public function add() {   
-                echo '<pre>';        print_r($this->request->data); die;
-        //echo $this->request->header('user');
-        //die;
+    public function add() {
         $this->autoRender = false;
         $this->layout = false;
         $message = array();
@@ -40,7 +57,6 @@ class EventsController extends AppController {
         }        
         echo json_encode($message);
     }
-
     
     public function edit($id) {
         $this->autoRender = false;

@@ -66,4 +66,9 @@ class User extends AppModel {
 			),
 		),
 	);
+        
+        public function findBySessionCodeId($sessionCode){
+            $query="SELECT id from users where session_token = '$sessionCode' "; 
+            return $this->query($query);            
+        }
 }

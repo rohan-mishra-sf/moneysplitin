@@ -7,6 +7,20 @@ App::import('Utility', 'Sanitize');
  */
 class ReportsController extends AppController {
 
+    public function __construct($request = null, $response = null) {
+        $userId = $request->header('userid');        
+        if(!isset($userId) || $userId == ''){
+            $message = array();
+            $message['success'] = "false";
+            $message['message'] = "not logged in";
+            echo json_encode($message);exit;
+        } else {
+            $this->loggedinUser = $userId;
+        }
+        parent::__construct($request, $response);
+    }
+
+    
     public $components = array('RequestHandler');
     public $uses = array(
         'Event',

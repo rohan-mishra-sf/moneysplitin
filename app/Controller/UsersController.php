@@ -12,20 +12,39 @@ class UsersController extends AppController {
         'User'
     );
             
+    public function __construct($request = null, $response = null) {        
+        $method = $request->method();    
+        if($method != 'POST'){
+            $sessionCode = $request->header('sessioncode');        
+            if(!isset($sessionCode) || $sessionCode == ''){
+                $message = array();
+                $message['success'] = "false";
+                $message['message'] = "not logged in";
+                echo json_encode($message);exit;
+            } else {
+                $User = $this->User->findBySessionCodeId($sessionCode);
+                $userId = $User[0]['users']['id'];
+                if($userId == ''){
+                    $message = array();
+                    $message['success'] = "false";
+                    $message['message'] = "not logged in";
+                    echo json_encode($message);exit;
+                } else {
+                    $this->loggedinUser = $userId;
+                }
+
+            }
+        }
+
+        parent::__construct($request, $response);
+    }
+
     public function index() {
         $this->autoRender = false;
         $this->layout = false;
         $users = $this->User->find('all');        
         $usersArray = $this->stripArrayIndex($users,'User');
         echo json_encode($usersArray);
-    }
-
-    private function stripArrayIndex($params, $index){
-        $result = array();
-        foreach ($params as $key => $val){
-            $result[] = $val[$index];
-        }
-        return $result;
     }
 
     public function view($id) {
@@ -35,25 +54,40 @@ class UsersController extends AppController {
         echo json_encode($user['User']);
     }
 
-    public function add() {   
+    public function add() {
         $this->autoRender = false;
         $this->layout = false;
         $message = array();
         $message['success'] = "false";
         $user = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data['email'])));
         if(isset($user['User']['email']) && $user['User']['email'] != '' && $user['User']['email'] == $this->request->data['email']){
-            echo $user['User']['id'];
+            $sessionCode = base64_encode(rand());
+            $sessionArray = array();
+            $sessionArray['id'] = $user['User']['id'];
+            $sessionArray['session_token'] = $sessionCode;
+            if ($this->User->save($sessionArray)) {
+                echo $sessionCode;                
+            } else {
+                    echo json_encode($message);
+            }
         } else {
             $this->User->create();
-            if ($this->User->save($this->request->data)) {
+            if ($result = $this->User->save($this->request->data)) {
                 $user = $this->User->find('first', array('conditions' => array('User.email' => $this->request->data['email'])));
                 if(isset($user['User']['email']) && $user['User']['email'] != '' && $user['User']['email'] == $this->request->data['email']){
-                    echo $user['User']['id'];
+                    $sessionCode = base64_encode(rand());
+                    $sessionArray = array();
+                    $sessionArray['id'] = $result['User']['id'];
+                    $sessionArray['session_token'] = $sessionCode;
+                    if ($this->User->save($sessionArray)) {
+                        echo $sessionCode;                
+                    } else {
+                        echo json_encode($message);
+                    }
                 } else {
                     echo json_encode($message);
                 }
             } else {
-                $errors = $this->User->validationErrors;
                 echo json_encode($message);
             }
         }
