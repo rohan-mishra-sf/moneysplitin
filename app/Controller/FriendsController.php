@@ -56,6 +56,7 @@ class FriendsController extends AppController {
             $userArray = $v['users'];
             $friendSharesArray[$v['users']['id']]['first_name'] = $userArray['first_name'];
             $friendSharesArray[$v['users']['id']]['last_name'] = $userArray['last_name'];
+            $friendSharesArray[$v['users']['id']]['fb_id'] = $userArray['fb_id'];
             $friendSharesArray[$v['users']['id']]['amount'] = $amountArray['amount'];            
         }
         foreach($friendContributions as $k => $v){
@@ -67,6 +68,7 @@ class FriendsController extends AppController {
         }
         foreach($friendSharesArray as $key => $val){
             $usersArray[$key]['name'] = $val['first_name'].' '.$val['last_name'];
+            $usersArray[$key]['fb_id'] = $val['fb_id'];
             $usersArray[$key]['amount'] =  $friendContributionsArray[$key]['amount'] - $val['amount'];
         }        
         //echo '<pre>';     print_r($friendContributionsArray);   print_r($friendSharesArray);   print_r($usersArray); die;        
