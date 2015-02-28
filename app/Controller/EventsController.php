@@ -45,9 +45,10 @@ class EventsController extends AppController {
         $eventsArray = $this->stripArrayIndex($events,'event');
         //$eventsArray['count'] = count($eventsArray);
         //echo '<pre>';        print_r($eventsArray); die;
-        $result = array();
-        $result['data'] = $eventsArray;
-        $result['count'] = count($eventsArray);
+        //$result = new ob
+        $result = new Object();
+        $result->count = count($eventsArray);
+        $result->data = $eventsArray;
         echo json_encode($result);
     }
 
