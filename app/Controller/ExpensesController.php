@@ -11,7 +11,8 @@ class ExpensesController extends AppController {
     public $uses = array(
         'Expense',
         'ExpenseContributor',
-        'ExpenseSharer'
+        'ExpenseSharer',
+        'User'
     );
             
     public function __construct($request = null, $response = null) {
