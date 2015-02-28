@@ -74,7 +74,7 @@ class EventsController extends AppController {
             //print_r($saveDataArray); die;
             $this->EventsHasUser->create();
             if ($this->EventsHasUser->save($saveDataArray)) {
-                $message['success'] = 'true';
+                echo $result['Event']['id']; die;
             }
         }        
         echo json_encode($message);
