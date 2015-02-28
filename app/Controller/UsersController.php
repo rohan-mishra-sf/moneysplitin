@@ -15,11 +15,21 @@ class UsersController extends AppController {
     public function index() {
         $this->autoRender = false;
         $this->layout = false;
-        $users = $this->User->find('all');
-        echo json_encode($users);
+        $users = $this->User->find('all');        
+        $usersArray = $this->stripArrayIndex($users,'User');
+        //echo '<pre>'; print_r($usersArray); die;
+        echo json_encode($usersArray);
     }
 
-    public function view($id) {
+    private function stripArrayIndex($params, $index){
+        $result = array();
+        foreach ($params as $key => $val){
+            $result[] = $val[$index];
+        }
+        return $result;
+    }
+
+        public function view($id) {
         $this->autoRender = false;
         $this->layout = false;
         $user = $this->User->findById($id);

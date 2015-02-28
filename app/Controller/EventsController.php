@@ -27,6 +27,9 @@ class EventsController extends AppController {
     }
 
     public function add() {   
+                echo '<pre>';        print_r($this->request->data); die;
+        //echo $this->request->header('user');
+        //die;
         $this->autoRender = false;
         $this->layout = false;
         $message = array();

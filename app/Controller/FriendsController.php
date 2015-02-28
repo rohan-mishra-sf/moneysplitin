@@ -8,7 +8,10 @@ App::import('Utility', 'Sanitize');
 class FriendsController extends AppController {
 
     public $components = array('RequestHandler');
-            
+    public $uses = array(
+        'EventsHasUser'
+    );
+    
     public function index() {
         $this->autoRender = false;
         $this->layout = false;        
@@ -28,6 +31,10 @@ class FriendsController extends AppController {
         $this->layout = false;
         $message = array();
         $message['success'] = "false";        
+        $this->EventsHasUser->create();
+        if ($this->EventsHasUser->save($this->request->data)) {
+            $message['success'] = 'true';
+        }        
         echo json_encode($message);
     }
 

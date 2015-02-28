@@ -63,5 +63,13 @@ class ReportsController extends AppController {
         }
         echo json_encode($message);
     }
+    
+    public function getReports(){
+        $this->autoRender = false;
+        $this->layout = false;
+        $message = array();
+        $message['success'] = "false";
+        
+    }
 
 }

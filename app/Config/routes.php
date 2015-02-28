@@ -31,9 +31,10 @@
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
         Router::mapResources('users');
+        Router::mapResources('friends');        
         Router::mapResources('events');
-        Router::mapResources('friends');
-        Router::mapResources('reports');
+        Router::mapResources('expenses');
+        //Router::mapResources('reports');
         Router::parseExtensions();
         
 /**
