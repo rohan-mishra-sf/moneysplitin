@@ -49,12 +49,12 @@ class ExpensesController extends AppController {
         $this->autoRender = false;
         $this->layout = false;
         $params = array( 'conditions' => array('Expense.events_id ' => $id) );
-        $expense = $this->Expense->find('list',$params);
+        $expense = $this->Expense->find('all', $params);
         //$expense = $this->Expense->find('first');
-        if(!count($expense)){
+        if(!isset($expense['Expense'])){
             echo '0'; exit;
         }
-        echo json_encode($expense);
+        echo json_encode($expense['Expense']);
     }
 
     public function add() {
