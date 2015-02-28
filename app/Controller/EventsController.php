@@ -61,6 +61,9 @@ class EventsController extends AppController {
         $this->layout = false;
         $message = array();
         $message['success'] = "false";        
+        $this->request->data['is_settled'] = 0;
+        $this->request->data['users_id'] = $this->loggedinUser;
+        $this->request->data['created_at'] = date('Y-m-d h:i:s');
         $this->Event->create();
         if ($this->Event->save($this->request->data)) {
             $message['success'] = 'true';
