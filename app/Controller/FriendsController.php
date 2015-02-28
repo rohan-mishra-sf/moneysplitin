@@ -71,8 +71,11 @@ class FriendsController extends AppController {
             $usersArray[$key]['fb_id'] = $val['fb_id'];
             $usersArray[$key]['amount'] =  $friendContributionsArray[$key]['amount'] - $val['amount'];
         }        
+        $result = array();
+        $result['count'] = count($usersArray);
+        $result['data'] = $usersArray;
         //echo '<pre>';     print_r($friendContributionsArray);   print_r($friendSharesArray);   print_r($usersArray); die;        
-        echo json_encode($usersArray);
+        echo json_encode($result);
     }
 
     public function add() {
