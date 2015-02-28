@@ -49,6 +49,7 @@ class ExpensesController extends AppController {
         $this->autoRender = false;
         $this->layout = false;
         $expense = $this->Expense->getEventExpenses( $id);
+        $expensesArray = $this->stripArrayIndex($expense,'expenses');
         print_r($expense); die;
         //$expense = $this->Expense->find('first');
         if(!count($expense)){
