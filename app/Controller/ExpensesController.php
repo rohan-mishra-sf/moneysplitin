@@ -50,12 +50,10 @@ class ExpensesController extends AppController {
         $this->layout = false;
         $expense = $this->Expense->getEventExpenses( $id);
         $expensesArray = $this->stripArrayIndex($expense,'expenses');
-        print_r($expensesArray); die;
-        //$expense = $this->Expense->find('first');
-        if(!count($expense)){
-            echo '0'; exit;
-        }
-        echo json_encode($expense);
+        $result = array();
+        $result['count'] = count($expensesArray);
+        $result['data'] = $expensesArray;
+        echo json_encode($result);
     }
 
     public function add() {
