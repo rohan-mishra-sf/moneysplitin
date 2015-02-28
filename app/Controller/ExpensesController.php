@@ -57,8 +57,8 @@ class ExpensesController extends AppController {
                     $sharersArray['created_at'] = $this->request->data['created_at'];            
                     $sharersArray['expenses_id'] = $result['Expense']['id'];
                     $sharersArray['users_id'] = $val['users_id']; 
-                    if($this->ExpenseContributor->save($contributorArray)){
-                        die('heer');
+                    $this->ExpenseSharer->create();
+                    if($this->ExpenseSharer->save($sharersArray)){                        
                         $message['success'] = 'true';
                     } else {
                         $message['success'] = 'false';
