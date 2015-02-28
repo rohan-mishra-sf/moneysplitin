@@ -51,6 +51,7 @@ class ExpensesController extends AppController {
         $params = array( 'conditions' => array('Expense.events_id ' => $id) );
         $expense = $this->Expense->find('all', $params);
         //$expense = $this->Expense->find('first');
+        print_r($expense);die;
         if(!isset($expense['Expense'])){
             echo '0'; exit;
         }
