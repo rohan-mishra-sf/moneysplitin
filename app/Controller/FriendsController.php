@@ -48,7 +48,7 @@ class FriendsController extends AppController {
         $this->layout = false;        
         $friends = $this->EventsHasUser->getEventFriends($id);
         echo '<pre>'; print_r($friends);
-        $friendContributions = $this->Event->getFriendContributions($id);
+        /*$friendContributions = $this->Event->getFriendContributions($id);
         $friendShares = $this->Event->getFriendShares($id);
         $friendContributionsArray = array();
         $friendSharesArray = array();
@@ -67,15 +67,21 @@ class FriendsController extends AppController {
             $friendContributionsArray[$v['users']['id']]['first_name'] = $userArray['first_name'];
             $friendContributionsArray[$v['users']['id']]['last_name'] = $userArray['last_name'];
             $friendContributionsArray[$v['users']['id']]['amount'] = $amountArray['amount'];            
-        }
+        }*/
         foreach ($friends as $key => $val){
             $usersArray[$val['users']['id']]['id'] = $val['users']['id'];
             $usersArray[$val['users']['id']]['name'] = $val['users']['first_name'].' '.$val['users']['last_name'];
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
             $usersArray[$val['users']['id']]['fb_id'] = $val['users']['fb_id'];
-            //$usersArray[$val['users']['id']]['amount'] = $friendContributionsArray[$key]['amount'] - $friendSharesArray[$key]['amount'];
         }
-        print_r($usersArray); die;
+        print_r($usersArray);
+        foreach ($usersArray as $key => $val){
+            $userContribution = $this->Event->getUserEventContributions($key,$id);
+            $userShare = $this->Event->getUserEventShares($key,$id);
+            print_r($userContribution);
+            print_r($userShare);
+        }
+        die;
         /*foreach($friendSharesArray as $key => $val){
             $usersArray[$key]['name'] = $val['first_name'].' '.$val['last_name'];
             $usersArray[$key]['fb_id'] = $val['fb_id'];
