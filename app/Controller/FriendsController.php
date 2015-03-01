@@ -82,13 +82,17 @@ class FriendsController extends AppController {
         $this->autoRender = false;
         $this->layout = false;
         $message = array();
-        $message['success'] = "false";        
+        $message['success'] = "false";       
+        echo '<pre>';print_r($this->request);print_r($this->request->data);
+        print_r($this->request->data['friends']);
         foreach($this->request->data['friends'] as $key => $val){
             $saveDataArray = array();
             $User = $this->User->findByFBid($val['email']);
+            print_r($User);
             $userId = $User[0]['users']['id'];
             $saveDataArray['users_id'] = $userId;
             $saveDataArray['events_id'] = $this->request->data['events_id'];            
+            print_r($saveDataArray); die;
             $this->EventsHasUser->create();
             if ($this->EventsHasUser->save($saveDataArray)) {
                 $message['success'] = 'true';
