@@ -65,21 +65,22 @@ class ExpensesController extends AppController {
         $expenseArray['title'] = $this->request->data['title'];
         $expenseArray['amount'] = $this->request->data['amount'];
         $expenseArray['events_id'] = $this->request->data['events_id'];
-        $expenseArray['created_at'] = $this->request->data['created_at'];
+        $expenseArray['created_at'] = date('Y-m-d h:i:s');
         $this->Expense->create();
         if ($result = $this->Expense->save($this->request->data)) {
             $contributorArray = array();
             $contributorArray['amount'] = $this->request->data['amount'];
-            $contributorArray['created_at'] = $this->request->data['created_at'];            
+            $contributorArray['created_at'] = date('Y-m-d h:i:s');
             $contributorArray['expenses_id'] = $result['Expense']['id'];
-            $contributorArray['users_id'] = $this->request->data['users_id'];
+            //$contributorArray['users_id'] = $this->request->data['users_id'];
+            $contributorArray['users_id'] = $this->loggedinUser;
             if ($this->ExpenseContributor->save($contributorArray)) {
                 $sharers = count($this->request->data['sharers']);
                 $sharedAmount = $this->request->data['amount'] / $sharers;                
                 foreach($this->request->data['sharers'] as $key => $val){
                     $sharersArray = array();
                     $sharersArray['amount'] = $sharedAmount;
-                    $sharersArray['created_at'] = $this->request->data['created_at'];            
+                    $sharersArray['created_at'] = date('Y-m-d h:i:s');
                     $sharersArray['expenses_id'] = $result['Expense']['id'];
                     $sharersArray['users_id'] = $val['users_id']; 
                     $this->ExpenseSharer->create();
