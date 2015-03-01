@@ -48,8 +48,8 @@ class FriendsController extends AppController {
         $this->layout = false;        
         $friends = $this->EventsHasUser->getEventFriends($id);
         foreach ($friends as $key => $val){
-            $userContribution = $this->Event->getUserEventContributions($val['users']['id'],$id);
-            $userShare = $this->Event->getUserEventShares($val['users']['id'],$id);
+            $userContribution = $this->Event->getUserEventContributions($id,$val['users']['id']);
+            $userShare = $this->Event->getUserEventShares($id,$val['users']['id']);
             $usersArray[$val['users']['id']]['id'] = $val['users']['id'];
             $usersArray[$val['users']['id']]['name'] = $val['users']['first_name'].' '.$val['users']['last_name'];
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
