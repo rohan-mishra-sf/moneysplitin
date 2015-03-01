@@ -85,7 +85,7 @@ class FriendsController extends AppController {
         $message['success'] = "false";        
         foreach($this->request->data['friends'] as $key => $val){
             $saveDataArray = array();
-            $User = $this->User->findByEmail($val['email']);
+            $User = $this->User->findByFBid($val['email']);
             $userId = $User[0]['users']['id'];
             $saveDataArray['users_id'] = $userId;
             $saveDataArray['events_id'] = $this->request->data['events_id'];            

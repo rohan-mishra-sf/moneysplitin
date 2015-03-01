@@ -76,4 +76,9 @@ class User extends AppModel {
             $query="SELECT id from users where email = '$email' "; 
             return $this->query($query);            
         }
+        
+        public function findByFBid($email){
+            $query="SELECT id from users where fb_id = '$email' "; 
+            return $this->query($query);            
+        }
 }
