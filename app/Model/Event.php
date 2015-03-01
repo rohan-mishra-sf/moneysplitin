@@ -121,11 +121,13 @@ class Event extends AppModel {
         
         public function getUserEventContributions($eventId,$userId){
             $query  = "Select sum(expense_contributors.amount) from expense_contributors where expense_contributors.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
+            echo $query;
             return $this->query($query);
         }
         
         public function getUserEventShares($eventId,$userId){
             $query  = "Select sum(expense_sharers.amount) from expense_sharers where expense_sharers.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
+            echo $query;
             return $this->query($query);
         }
         
