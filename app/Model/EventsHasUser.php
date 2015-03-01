@@ -51,4 +51,8 @@ class EventsHasUser extends AppModel {
             return $this->query($query);            
         }
         
+        public function getEventFriends($eventId){
+            $query="SELECT events_has_users.id, users.first_name, users.last_name,users.email, users.fb_id  from events_has_users join users on users.id = events_has_users.users_id where events_has_users.events_id = $eventId"; 
+            return $this->query($query); 
+        }
 }

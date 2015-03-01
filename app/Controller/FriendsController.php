@@ -46,6 +46,8 @@ class FriendsController extends AppController {
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;        
+        $friends = $this->Event->getEventFriends($id);
+        echo '<pre>'; print_r($friends); die;
         $friendContributions = $this->Event->getFriendContributions($id);
         $friendShares = $this->Event->getFriendShares($id);
         $friendContributionsArray = array();
@@ -65,6 +67,9 @@ class FriendsController extends AppController {
             $friendContributionsArray[$v['users']['id']]['first_name'] = $userArray['first_name'];
             $friendContributionsArray[$v['users']['id']]['last_name'] = $userArray['last_name'];
             $friendContributionsArray[$v['users']['id']]['amount'] = $amountArray['amount'];            
+        }
+        foreach ($friends as $key => $val){
+            
         }
         foreach($friendSharesArray as $key => $val){
             $usersArray[$key]['name'] = $val['first_name'].' '.$val['last_name'];
