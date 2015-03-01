@@ -120,14 +120,12 @@ class Event extends AppModel {
         }
         
         public function getUserEventContributions($eventId,$userId){
-            $query  = "Select sum(expense_contributors.amount) as contri_amount from expense_contributors where expense_contributors.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
-            echo $query;
+            $query  = "Select COALESCE(sum(expense_contributors.amount),0) as contri_amount from expense_contributors where expense_contributors.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
             return $this->query($query);
         }
         
         public function getUserEventShares($eventId,$userId){
-            $query  = "Select sum(expense_sharers.amount) as share_amount from expense_sharers where expense_sharers.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
-            echo $query;
+            $query  = "Select COALESCE(sum(expense_sharers.amount),0) as share_amount from expense_sharers where expense_sharers.expenses_id in (SELECT expenses.id as expenses_id FROM expenses WHERE events_id = $eventId ) AND users_id =$userId ";
             return $this->query($query);
         }
         

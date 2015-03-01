@@ -59,7 +59,6 @@ class FriendsController extends AppController {
         $result = array();
         $result['count'] = count($usersArray);
         $result['data'] = $usersArray;
-        //echo '<pre>';     print_r($friendContributionsArray);   print_r($friendSharesArray);   print_r($usersArray); die;        
         echo json_encode($result);
     }
 
