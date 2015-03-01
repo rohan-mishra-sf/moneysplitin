@@ -43,4 +43,12 @@ class EventsHasUser extends AppModel {
 			),
 		),
 	);
+        
+        public function checkUserExists($params ){
+            $eventid = $params['events_id'];
+            $usersid = $params['users_id'];
+            $query="SELECT id from events_has_users where events_id = $eventid and users_id = $usersid "; 
+            return $this->query($query);            
+        }
+        
 }
