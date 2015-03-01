@@ -46,7 +46,7 @@ class FriendsController extends AppController {
     public function view($id) {
         $this->autoRender = false;
         $this->layout = false;        
-        $friends = $this->Event->getEventFriends($id);
+        $friends = $this->EventsHasUser->getEventFriends($id);
         echo '<pre>'; print_r($friends); die;
         $friendContributions = $this->Event->getFriendContributions($id);
         $friendShares = $this->Event->getFriendShares($id);
