@@ -66,8 +66,8 @@ class ReportsController extends AppController {
         $userTotalContributions = $userTotalContributionsArray[0][0]['sum(amount)'];
         $userTotalShares = $userTotalSharesArray[0][0]['sum(amount)'];
         $result = array();
-        $result['paid'] = $userTotalContributions;
-        $result['share'] = $userTotalShares;
+        $result['paid'] = number_format($userTotalContributions, 2);
+        $result['share'] = number_format($userTotalShares, 2);
         echo json_encode($result);
     }
 
