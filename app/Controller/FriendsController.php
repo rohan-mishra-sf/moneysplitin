@@ -48,16 +48,14 @@ class FriendsController extends AppController {
         $this->layout = false;        
         $friends = $this->EventsHasUser->getEventFriends($id);
         foreach ($friends as $key => $val){
-            echo $val['users']['id'].'<br/>';
             $userContribution = $this->Event->getUserEventContributions($id,$val['users']['id']);
             $userShare = $this->Event->getUserEventShares($id,$val['users']['id']);
             $usersArray[$val['users']['id']]['id'] = $val['users']['id'];
             $usersArray[$val['users']['id']]['name'] = $val['users']['first_name'].' '.$val['users']['last_name'];
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
             $usersArray[$val['users']['id']]['fb_id'] = $val['users']['fb_id'];
-            //$usersArray[$val['users']['id']]['amountdiff'] ; 
-            echo $userContribution[0][0]['contri_amount']; echo " this is a space "; echo $userShare[0][0]['share_amount'];
-        } die;
+            $usersArray[$val['users']['id']]['amountdiff'] = $userContribution[0][0]['contri_amount'] - $userShare[0][0]['share_amount'];
+        }
         $result = array();
         $result['count'] = count($usersArray);
         $result['data'] = $usersArray;
