@@ -90,11 +90,12 @@ class FriendsController extends AppController {
             $saveDataArray['users_id'] = $userId;
             $saveDataArray['events_id'] = $val['events_id'];            
             $result =  $this->EventsHasUser->checkUserExists($saveDataArray);
-            print_r($result); die;
-            $this->EventsHasUser->create();
-            if ($this->EventsHasUser->save($saveDataArray)) {
-                $message['success'] = 'true';
-            }        
+            if(!count($result)){
+                $this->EventsHasUser->create();
+                if ($this->EventsHasUser->save($saveDataArray)) {
+                    $message['success'] = 'true';
+                }        
+            }
         }
         echo json_encode($message);
     }
