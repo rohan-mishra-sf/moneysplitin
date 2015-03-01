@@ -49,7 +49,9 @@ class FriendsController extends AppController {
         $friends = $this->EventsHasUser->getEventFriends($id);
         foreach ($friends as $key => $val){
             $userContribution = $this->Event->getUserEventContributions($val['users']['id'],$id);
+            print_r($userContribution);
             $userShare = $this->Event->getUserEventShares($val['users']['id'],$id);
+            print_r($userShare);
             $usersArray[$val['users']['id']]['id'] = $val['users']['id'];
             $usersArray[$val['users']['id']]['name'] = $val['users']['first_name'].' '.$val['users']['last_name'];
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
