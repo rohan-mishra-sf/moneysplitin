@@ -55,7 +55,7 @@ class FriendsController extends AppController {
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
             $usersArray[$val['users']['id']]['fb_id'] = $val['users']['fb_id'];
             $usersArray[$val['users']['id']]['amountdiff'] = $userContribution - $userShare;
-        }     
+        }
         echo '<pre>';
         print_r($usersArray);
         die;
