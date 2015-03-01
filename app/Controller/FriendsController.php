@@ -55,7 +55,8 @@ class FriendsController extends AppController {
             $usersArray[$val['users']['id']]['name'] = $val['users']['first_name'].' '.$val['users']['last_name'];
             $usersArray[$val['users']['id']]['email'] = $val['users']['email'];
             $usersArray[$val['users']['id']]['fb_id'] = $val['users']['fb_id'];
-            $usersArray[$val['users']['id']]['amountdiff'] ; echo $userContribution[0][0]['contri_amount']; echo " this is a space "; echo $userShare[0][0]['share_amount'];
+            //$usersArray[$val['users']['id']]['amountdiff'] ; 
+            echo $userContribution[0][0]['contri_amount']; echo " this is a space "; echo $userShare[0][0]['share_amount'];
         } die;
         $result = array();
         $result['count'] = count($usersArray);
